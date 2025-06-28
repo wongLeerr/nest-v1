@@ -14,15 +14,21 @@ import {
   Req,
   Res,
   Session,
+  Inject,
 } from '@nestjs/common';
 import { UserService } from './user.service';
+import { ConfigService } from '../config/config.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as svgCaptcha from 'svg-captcha'; // 生成验证码的工具
-
+import { Options } from '../config/config.module';
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly configService: ConfigService,
+    @Inject('CONFIG_OPTIONS') private readonly options: Options,
+  ) {}
   @Get('verifyCode')
   getVerifyCode(@Req() req, @Res() res, @Session() session) {
     const captcha = svgCaptcha.create({
@@ -54,6 +60,11 @@ export class UserController {
       status: 200,
       msg: 'no',
     };
+  }
+
+  @Get('test')
+  test() {
+    return this.options.num;
   }
 }
 
