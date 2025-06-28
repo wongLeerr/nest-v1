@@ -29,6 +29,11 @@ export class UserController {
     private readonly configService: ConfigService,
     @Inject('CONFIG_OPTIONS') private readonly options: Options,
   ) {}
+  @Get()
+  findAll() {
+    return 'user';
+  }
+
   @Get('verifyCode')
   getVerifyCode(@Req() req, @Res() res, @Session() session) {
     const captcha = svgCaptcha.create({
@@ -60,11 +65,6 @@ export class UserController {
       status: 200,
       msg: 'no',
     };
-  }
-
-  @Get('test')
-  test() {
-    return this.options.num;
   }
 }
 

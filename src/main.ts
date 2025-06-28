@@ -1,10 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { VersioningType } from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express';
+import * as cors from 'cors';
 import { AppModule } from './app.module';
 import * as session from 'express-session';
 
+const globalMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  console.log('🐶🐶 globalMiddleware');
+  console.log('req:', req.originalUrl);
+  next();
+};
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(cors());
+  app.use(globalMiddleware);
   // 开启版本控制，例如在请求url中加上v1/v2这样的字眼
   app.enableVersioning({
     type: VersioningType.URI,

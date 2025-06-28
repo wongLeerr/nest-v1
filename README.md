@@ -136,3 +136,49 @@ export class ConfigModule {
 ```
 
 ### 中间件
+
+概念：中间件是在路由处理程序 之前 调用的函数。 中间件函数可以访问请求和响应对象。
+
+```
+定义方式：
+import { NestMiddleware, Injectable } from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express';
+
+@Injectable()
+export class LoggerMiddleware implements NestMiddleware {
+  use(req: Request, res: Response, next: NextFunction) {
+    console.log('🐶🐶 LoggerMiddleware');
+    next();
+  }
+}
+
+使用方式：
+export class UserModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes({
+      path: 'user',
+      method: RequestMethod.GET,
+    });
+  }
+}
+```
+
+### 全局中间件
+
+一定是声明在main.ts入口文件当中的。
+
+```
+声明方式：
+const globalMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  console.log('🐶🐶 globalMiddleware');
+  console.log('req:', req.originalUrl);
+  next();
+};
+使用方式：
+app.use(globalMiddleware);
+一般作用：白名单鉴权、解决跨域
+```
+
+### 解决跨域
+
+使用cors中间件，引入+use一下，解决跨域就是这么简单。
