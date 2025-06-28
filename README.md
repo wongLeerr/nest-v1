@@ -223,3 +223,9 @@ export class UploadModule {}
 图片上传到服务器了，用户怎么访问，因此需要解决静态资源的访问问题，在main.ts入口文件中做处理。
 app.useStaticAssets(join(__dirname, 'images')); // 使用中间件托管静态资源，因此外部可通过服务器域名直接访问图片地址
 ```
+
+### download 下载文件
+
+两种方式：
+第一种是使用接口响应res时响应download类型：res.download(url); 这样用户访问接口时就会直接下载资源。
+第二种是使用流的方式交给前端，前端对流数据做处理，进而下载文件，使用流的方式时需要借助库：import { zip } from 'compressing';
