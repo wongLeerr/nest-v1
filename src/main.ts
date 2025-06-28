@@ -6,6 +6,8 @@ import { AppModule } from './app.module';
 import * as session from 'express-session';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import { ResponseInterceptor } from './common/response';
+import { HttpExceptionFilter } from './common/filter';
 
 const globalMiddleware = (req: Request, res: Response, next: NextFunction) => {
   next();
@@ -20,6 +22,8 @@ async function bootstrap() {
   app.enableVersioning({
     type: VersioningType.URI,
   });
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalInterceptors(new ResponseInterceptor());
   app.use(
     session({
       secret: 'lele', // 加盐
