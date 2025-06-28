@@ -182,3 +182,44 @@ app.use(globalMiddleware);
 ### 解决跨域
 
 使用cors中间件，引入+use一下，解决跨域就是这么简单。
+
+### upload 上传文件
+
+借助两个库，一个是nest自带的，另一个是multer。
+想实现从接口上传图片，服务端需要干这么几件事儿：1. 接得住图片 2. 图片放哪 3. 图片叫什么名字
+
+```js
+解决123问题：
+@Module({
+  imports: [
+    MulterModule.register({
+      storage: diskStorage({
+        destination: join(__dirname, '../images'), // 放在dist目录的images目录下面
+        filename: (req, file, cb) => {
+          const fileName = `${Date.now()}${extname(file.originalname)}`; // 上传的文件给他起的名字
+          return cb(null, fileName);
+        },
+      }),
+    }),
+  ],
+  controllers: [UploadController],
+  providers: [UploadService],
+})
+export class UploadModule {}
+
+```
+
+```js
+  具体接口应该做处理：
+  @Post('album')
+  @UseInterceptors(FileInterceptor('file'))
+  upload(@UploadedFile() file) {
+    console.log('file>>', file);
+    return true;
+  }
+```
+
+```
+图片上传到服务器了，用户怎么访问，因此需要解决静态资源的访问问题，在main.ts入口文件中做处理。
+app.useStaticAssets(join(__dirname, 'images')); // 使用中间件托管静态资源，因此外部可通过服务器域名直接访问图片地址
+```
