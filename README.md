@@ -275,3 +275,7 @@ DTO：Data Transform Object
 
 执行时机： 守卫在每个中间件之后执行，但在任何拦截器或管道之前执行。
 作用：鉴权、身份验证等。
+
+### swagger
+
+使用swagger-ui-express和@nestjs/swagger可以自动生成swagger文档，想让swagger文档更加清晰，需要根据swagger规范在写接口的时候加很多东西。

@@ -8,6 +8,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { ResponseInterceptor } from './common/response';
 import { HttpExceptionFilter } from './common/filter';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 const globalMiddleware = (req: Request, res: Response, next: NextFunction) => {
   next();
@@ -15,6 +16,13 @@ const globalMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const options = new DocumentBuilder()
+    .setTitle('乐哥接口文档')
+    .setDescription('描述...')
+    .setVersion('1')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('/api-docs', app, document);
   app.use(cors());
   app.use(globalMiddleware);
   app.useStaticAssets(join(__dirname, 'images'));
