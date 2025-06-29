@@ -8,6 +8,7 @@ import { ListModule } from './list/list.module';
 import { ConfigModule } from './config/config.module';
 import { UploadModule } from './upload/upload.module';
 import { LoginModule } from './login/login.module';
+import { SpiderModule } from './spider/spider.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { LoginModule } from './login/login.module';
     ConfigModule.forRoot({ num: 1 }),
     UploadModule,
     LoginModule,
+    SpiderModule,
   ],
   controllers: [AppController, DemoController],
   providers: [AppService],
