@@ -279,3 +279,7 @@ DTO：Data Transform Object
 ### swagger
 
 使用swagger-ui-express和@nestjs/swagger可以自动生成swagger文档，想让swagger文档更加清晰，需要根据swagger规范在写接口的时候加很多东西。
+
+### 实体
+
+实体是一个映射到数据库表的类，通俗的讲：你定义了一个实体，就等同于定义了一张表儿。
