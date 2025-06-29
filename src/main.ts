@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { VersioningType } from '@nestjs/common';
+import { VersioningType, ValidationPipe } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as cors from 'cors';
 import { AppModule } from './app.module';
@@ -24,6 +24,7 @@ async function bootstrap() {
   });
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new ResponseInterceptor());
+  app.useGlobalPipes(new ValidationPipe());
   app.use(
     session({
       secret: 'lele', // 加盐

@@ -245,3 +245,22 @@ app.useStaticAssets(join(__dirname, 'images')); // 使用中间件托管静态�
     return this.listService.findOne(+id);
   }
 ```
+
+### 管道验证DTO
+
+DTO：Data Transform Object
+作用就是可以对前端传来的参数进行验证，例如是否为空、类型是否正确、长度是否正确。
+以login模块举例子:
+
+```
+1. 生成pipe文件夹，使用命令 nest g pi login
+2. 在controller中引入并使用，塞入Body装饰器中：
+  @Post()
+  create(@Body(LoginPipe) createLoginDto: CreateLoginDto) {
+    return this.loginService.create(createLoginDto);
+  }
+3. 在DTO中借助class-validator库实现对参数的基本验证
+4. 在pipe中处理验证的异常处理。
+```
+
+但是，上面这种验证方式太麻烦了，对于每个接口都需要创建一堆文件去做验证，现在nest提供了全局的方法，只需要在main.ts中进行全局使用即可，因此我们只需在DTO文件中进行类型、长度等约束，别的地方不需要处理了。
