@@ -44,7 +44,6 @@ export class GuardController {
   @ApiResponse({
     status: 200,
     description: '获取守卫详情成功',
-    type: Guard,
   })
   findOne(@Param('id') id: string) {
     return this.guardService.findOne(+id);
