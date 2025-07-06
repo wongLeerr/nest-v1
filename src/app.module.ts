@@ -12,6 +12,7 @@ import { SpiderModule } from './spider/spider.module';
 import { GuardModule } from './guard/guard.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CurdModule } from './curd/curd.module';
+import { ManagerModule } from './manager/manager.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { CurdModule } from './curd/curd.module';
       autoLoadEntities: true, // 自动加载实体类
     }),
     CurdModule,
+    ManagerModule,
   ],
   controllers: [AppController, DemoController],
   providers: [AppService],
