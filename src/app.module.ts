@@ -11,6 +11,7 @@ import { LoginModule } from './login/login.module';
 import { SpiderModule } from './spider/spider.module';
 import { GuardModule } from './guard/guard.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CurdModule } from './curd/curd.module';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '12345678',
+      password: 'rootroot',
       database: 'nest_db',
       // entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true, // 是否要将实体类同步到数据库 生产环境需要关闭
@@ -35,6 +36,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       retryDelay: 500, // 重试间隔
       autoLoadEntities: true, // 自动加载实体类
     }),
+    CurdModule,
   ],
   controllers: [AppController, DemoController],
   providers: [AppService],
